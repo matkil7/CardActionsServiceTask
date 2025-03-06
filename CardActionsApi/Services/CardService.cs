@@ -1,8 +1,11 @@
 ﻿using CardActionsApi.Models;
 
 namespace CardActionsApi.Services;
-
-public class CardService
+public interface ICardService
+{
+    Task<CardDetails?> GetCardDetails(string userId, string cardNumber);
+}
+public class CardService : ICardService
 {
     private readonly Dictionary<string, Dictionary<string, CardDetails>> _userCards = CreateSampleUserCards();
 
@@ -43,6 +46,7 @@ public class CardService
         if (!_userCards.TryGetValue(userId, out var cards)
             || !cards.TryGetValue(cardNumber, out var cardDetails))
         {
+            //TODO do not return null 
             return null;
         }
 
