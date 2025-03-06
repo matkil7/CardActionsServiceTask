@@ -1,7 +1,7 @@
 ﻿using CardActionsApi.Helpers;
 using CardActionsApi.Models;
-using CardActionsApi.Specifications;
-using CardActionsApi.Specifications.Actions;
+using CardActionsApi.Specifications.Builders;
+using CardActionsApi.Specifications.Builders.Action;
 using CardActionsApi.Specifications.Rules.Enums;
 
 namespace CardActionsApi.Providers.Actions;
@@ -13,18 +13,18 @@ public class ActionsSpecificationsProvider : ISpecificationsProvider<CardDetails
         return new Dictionary<int, ISpecificationBuilder<CardDetails>>
         {
             {
-                1, ActionSpecifiactionHelper.IsAccessibleCardTypeAndAnyOfState([CardStatus.Active])
+                1, ActionSpecificationHelper.IsAccessibleCardTypeAndAnyOfState([CardStatus.Active])
             },
             {
-                2, ActionSpecifiactionHelper.IsAccessibleCardTypeAndAnyOfState([CardStatus.Inactive])
+                2, ActionSpecificationHelper.IsAccessibleCardTypeAndAnyOfState([CardStatus.Inactive])
             },
             {
-                3, ActionSpecifiactionHelper.IsAccessibleCardTypeAndAccessibleState()
+                3, ActionSpecificationHelper.IsAccessibleCardTypeAndAccessibleState()
             },
-            { 4, ActionSpecifiactionHelper.IsAccessibleCardTypeAndAccessibleState() },
+            { 4, ActionSpecificationHelper.IsAccessibleCardTypeAndAccessibleState() },
             {
                 5,
-                ActionSpecifiactionHelper.AnyOfCardTypeAndIsAccessibleState([CardType.Credit])
+                ActionSpecificationHelper.AnyOfCardTypeAndIsAccessibleState([CardType.Credit])
             },
             {
                 6,
@@ -32,7 +32,7 @@ public class ActionsSpecificationsProvider : ISpecificationsProvider<CardDetails
                     x.IsPinSet && CardStatusHelper.OrderedInactiveActiveBlocked.Contains(x.CardStatus))
             },
             {
-                7, new ActionSpecificationBuilder().Rule(x => CarTypeHelper.CardTypes.Contains(x.CardType)).Rule(x =>
+                7, new ActionSpecificationBuilder().Rule(new IsAccessibleType()).Rule(x =>
                     !x.IsPinSet && CardStatusHelper.OrderedInactiveActiveBlocked.Contains(x.CardStatus))
             },
             {

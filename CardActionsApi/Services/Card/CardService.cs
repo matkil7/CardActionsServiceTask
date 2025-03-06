@@ -1,10 +1,7 @@
 ﻿using CardActionsApi.Models;
 
-namespace CardActionsApi.Services;
-public interface ICardService
-{
-    Task<CardDetails?> GetCardDetails(string userId, string cardNumber);
-}
+namespace CardActionsApi.Services.Card;
+
 public class CardService : ICardService
 {
     private readonly Dictionary<string, Dictionary<string, CardDetails>> _userCards = CreateSampleUserCards();

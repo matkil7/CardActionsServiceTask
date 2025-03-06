@@ -1,8 +1,10 @@
 ﻿using CardActionsApi.Models;
 using CardActionsApi.Providers;
 using CardActionsApi.Services;
-using CardActionsApi.Specifications;
-using CardActionsApi.Specifications.Actions;
+using CardActionsApi.Services.Action;
+using CardActionsApi.Services.Card;
+using CardActionsApi.Specifications.Builders;
+using CardActionsApi.Specifications.Builders.Action;
 using Moq;
 
 namespace Tests;
@@ -58,7 +60,7 @@ public class ActionServiceTests
 
         _mockCardService.Setup(s => s.GetCardDetails(userId, cardNumber))
             .ReturnsAsync((CardDetails)null);
-
+        Create_SUT();
         // Act
         var result = await _service.GetCardActions(userId, cardNumber);
 
@@ -81,7 +83,7 @@ public class ActionServiceTests
             .ReturnsAsync(cardDetails);
         _mockSpecificationProvider.Setup(p => p.GetDefinitions())
             .Returns(expectedActions);
-
+        Create_SUT();
         // Act
         var result = await _service.GetCardActions(userId, cardNumber);
 
@@ -99,7 +101,7 @@ public class ActionServiceTests
 
         _mockCardService.Setup(s => s.GetCardDetails(userId, cardNumber))
             .ThrowsAsync(new Exception("Unexpected error"));
-
+        Create_SUT();
         // Act
         var result = await _service.GetCardActions(userId, cardNumber);
 

@@ -1,6 +1,6 @@
 ﻿using CardActionsApi.Models;
 using CardActionsApi.Specifications;
-using CardActionsApi.Specifications.Actions;
+using CardActionsApi.Specifications.Builders.Action;
 using Moq;
 
 namespace Tests;

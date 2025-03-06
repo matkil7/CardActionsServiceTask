@@ -1,6 +1,6 @@
 ﻿using CardActionsApi.Models;
 
-namespace CardActionsApi.Specifications.Actions;
+namespace CardActionsApi.Specifications.Builders.Action;
 
 public class ActionSpecificationBuilder : ISpecificationBuilder<CardDetails>
 {

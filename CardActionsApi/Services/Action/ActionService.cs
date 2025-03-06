@@ -1,15 +1,11 @@
 ﻿using CardActionsApi.Models;
 using CardActionsApi.Providers;
-using CardActionsApi.Specifications;
+using CardActionsApi.Services.Action;
+using CardActionsApi.Services.Card;
+using CardActionsApi.Specifications.Builders;
 using Utils;
 
 namespace CardActionsApi.Services;
-
-public interface IActionService
-{
-    Task<Result<IEnumerable<string>>> GetCardActions(string userId, string cardNumber);
-}
-
 public class ActionService : IActionService
 {
     private Dictionary<int, ISpecificationBuilder<CardDetails>> _specifications = new();
@@ -29,7 +25,7 @@ public class ActionService : IActionService
         }
     }
 
-    public IEnumerable<string> GetActions(CardDetails cardDetails)
+    private IEnumerable<string> GetActions(CardDetails cardDetails)
     {
         return _specifications.Any()
             ? _specifications

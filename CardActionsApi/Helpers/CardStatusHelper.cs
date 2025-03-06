@@ -19,6 +19,4 @@ public static class CardStatusHelper
         CardStatus.Inactive,
         CardStatus.Active,
     ];
-    public static CardType[] CardTypes =>
-        Enum.GetValues<CardType>(); 
 }

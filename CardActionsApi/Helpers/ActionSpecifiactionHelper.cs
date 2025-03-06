@@ -1,11 +1,11 @@
 ﻿using CardActionsApi.Models;
-using CardActionsApi.Specifications;
-using CardActionsApi.Specifications.Actions;
+using CardActionsApi.Specifications.Builders;
+using CardActionsApi.Specifications.Builders.Action;
 using CardActionsApi.Specifications.Rules.Enums;
 
 namespace CardActionsApi.Helpers;
 
-public class ActionSpecifiactionHelper
+public class ActionSpecificationHelper
 {
     public static ISpecificationBuilder<CardDetails> IsAccessibleCardTypeAndAnyOfState(CardStatus[] statuses) =>
         new ActionSpecificationBuilder().Rule(x=> Enum.GetValues<CardType>().Contains(x.CardType)).Rule(new AnyOfStatuses(statuses));

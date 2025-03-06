@@ -1,4 +1,4 @@
-﻿namespace CardActionsApi.Specifications;
+﻿namespace CardActionsApi.Specifications.Builders;
 
 public interface ISpecificationBuilder<T> where T: class
 {
