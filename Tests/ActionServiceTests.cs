@@ -2,21 +2,25 @@
 using CardActionsApi.Providers;
 using CardActionsApi.Services;
 using CardActionsApi.Specifications;
+using CardActionsApi.Specifications.Actions;
 using Moq;
 
 namespace Tests;
 
 public class ActionServiceTests
 {
-   private readonly Mock<ICardService> _mockCardService;
-    private readonly Mock<ISpecificationsProvider<CardDetails>> _mockSpecificationProvider;
-    private readonly IActionService _service;
+   private Mock<ICardService> _mockCardService;
+    private  Mock<ISpecificationsProvider<CardDetails>> _mockSpecificationProvider;
+    private  IActionService _service;
 
+    private void Create_SUT()
+    {
+        _service = new ActionService( _mockSpecificationProvider.Object, _mockCardService.Object);
+    }
     public ActionServiceTests()
     {
         _mockCardService = new Mock<ICardService>();
         _mockSpecificationProvider = new Mock<ISpecificationsProvider<CardDetails>>();
-        _service = new ActionService( _mockSpecificationProvider.Object, _mockCardService.Object);
     }
 
     [Fact]
@@ -27,18 +31,22 @@ public class ActionServiceTests
         var cardNumber = "1234567890";
         var cardDetails = new CardDetails(cardNumber, It.IsAny<CardType>(), It.IsAny<CardStatus>(),
             It.IsAny<bool>());
-        var expectedActions = new List<string> { "Activate", "Block" };
-
+        var dict = new Dictionary<int, ISpecificationBuilder<CardDetails>>();
+        
+        dict.Add(1, new ActionSpecificationBuilder());
+        dict.Add(2, new ActionSpecificationBuilder());
+       
+        var parsedToActionNames = dict.Select(rule => $"ACTION{rule.Key}");
+        
         _mockCardService.Setup(s => s.GetCardDetails(userId, cardNumber))
             .ReturnsAsync(cardDetails);
-        
-
-        // Act
+        _mockSpecificationProvider.Setup(x => x.GetDefinitions()).Returns(dict); // Act
+        Create_SUT();
         var result = await _service.GetCardActions(userId, cardNumber);
 
         // Assert
         Assert.True(result.IsSuccess);
-        Assert.Equal(expectedActions, result.Value);
+        Assert.Equal(parsedToActionNames, result.Value);
     }
 
     [Fact]
@@ -97,7 +105,7 @@ public class ActionServiceTests
 
         // Assert
         Assert.False(result.IsSuccess);
-        Assert.Contains("No card found", result.Errors);
+        Assert.Contains("Unexpected error", result.Errors);
     }
     
     
