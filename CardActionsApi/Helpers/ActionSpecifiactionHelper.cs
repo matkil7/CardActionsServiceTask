@@ -7,10 +7,10 @@ namespace CardActionsApi.Helpers;
 
 public class ActionSpecifiactionHelper
 {
-    public static ISpecificationBuilder<CardDetails> AccessibleCardTypeAndAnyOfState(CardStatus[] statuses) =>
+    public static ISpecificationBuilder<CardDetails> IsAccessibleCardTypeAndAnyOfState(CardStatus[] statuses) =>
         new ActionSpecificationBuilder().Rule(x=> Enum.GetValues<CardType>().Contains(x.CardType)).Rule(new AnyOfStatuses(statuses));
-    public static ISpecificationBuilder<CardDetails> AccessibleCardTypeAndAccessibleState() =>
+    public static ISpecificationBuilder<CardDetails> IsAccessibleCardTypeAndAccessibleState() =>
         new ActionSpecificationBuilder().Rule(x => Enum.GetValues<CardType>().Contains(x.CardType)).Rule(x => Enum.GetValues<CardStatus>().Contains(x.CardStatus));
-    public static ISpecificationBuilder<CardDetails> AnyOfCardTypeAndAccessibleState(CardType[] types) =>
+    public static ISpecificationBuilder<CardDetails> AnyOfCardTypeAndIsAccessibleState(CardType[] types) =>
         new ActionSpecificationBuilder().Rule(new AnyOfTypes(types)).Rule(x => Enum.GetValues<CardStatus>().Contains(x.CardStatus));
 }

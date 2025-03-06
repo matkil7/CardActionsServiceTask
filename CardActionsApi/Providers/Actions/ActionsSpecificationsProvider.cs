@@ -13,18 +13,18 @@ public class ActionsSpecificationsProvider : ISpecificationsProvider<CardDetails
         return new Dictionary<int, ISpecificationBuilder<CardDetails>>
         {
             {
-                1, ActionSpecifiactionHelper.AccessibleCardTypeAndAnyOfState([CardStatus.Active])
+                1, ActionSpecifiactionHelper.IsAccessibleCardTypeAndAnyOfState([CardStatus.Active])
             },
             {
-                2, ActionSpecifiactionHelper.AccessibleCardTypeAndAnyOfState([CardStatus.Inactive])
+                2, ActionSpecifiactionHelper.IsAccessibleCardTypeAndAnyOfState([CardStatus.Inactive])
             },
             {
-                3, ActionSpecifiactionHelper.AccessibleCardTypeAndAccessibleState()
+                3, ActionSpecifiactionHelper.IsAccessibleCardTypeAndAccessibleState()
             },
-            { 4, ActionSpecifiactionHelper.AccessibleCardTypeAndAccessibleState() },
+            { 4, ActionSpecifiactionHelper.IsAccessibleCardTypeAndAccessibleState() },
             {
                 5,
-                ActionSpecifiactionHelper.AnyOfCardTypeAndAccessibleState([CardType.Credit])
+                ActionSpecifiactionHelper.AnyOfCardTypeAndIsAccessibleState([CardType.Credit])
             },
             {
                 6,
