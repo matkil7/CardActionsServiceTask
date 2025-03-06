@@ -2,10 +2,10 @@
 
 namespace CardActionsApi.Specifications.Rules.Enums;
 
-public class AnyOfTypes(CardType[] items) : IsSatisfiableEnum<CardType, CardDetails>(items)
+public class IsAccessibleStatus() : IsSatisfiableEnum<CardStatus, CardDetails>(Enum.GetValues<CardStatus>())
 {
     public override bool IsSatisfiedBy(CardDetails cardDetails)
     {
-        return _items.Contains(cardDetails.CardType);
+        return _items.Contains(cardDetails.CardStatus);
     }
 }
